@@ -6,5 +6,5 @@
     <color name="bule">#33AADD</color>
     <color name="taskBar">#000000</color>
     <color name="textColor">#FFFFFF</color>
-    <color name="background">#1000</color>
+    <color name="background">#40000000</color>
 </resources>

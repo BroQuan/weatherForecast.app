@@ -13,9 +13,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Utility {
+    //解析JSON数据：各个地区数据+天气数据
+
+
     //解析和处理服务器返回的省级数据
+    /*
+    [{"id":1,"name":"北京"},
+     {"id":2,"name":"上海"},
+     ……
+    ]
+     */
+
     public static boolean handleProvinceResponse(String response) throws JSONException {
-        if (!TextUtils.isEmpty(response)) {
+        if (!TextUtils.isEmpty(response)) {         //响应判空操作
             JSONArray allProvinces = new JSONArray(response);
             for (int i = 0; i < allProvinces.length(); ++i) {
                 JSONObject provinceObject = allProvinces.getJSONObject(i);
@@ -29,6 +39,12 @@ public class Utility {
         return false;
     }
     //解析和处理服务器返回的市级数据
+    /*
+    [{"id":113,"name":"南京"},
+    {"id":114,"name":"无锡"},
+    ……
+    ]
+     */
     public static boolean handleCityResponse(String response, int provinceId) throws JSONException {
         if (!TextUtils.isEmpty(response)) {
             JSONArray allCities = new JSONArray(response);
@@ -45,6 +61,13 @@ public class Utility {
         return false;
     }
     //解析和处理服务器返回的县级数据
+
+    /*
+    [{"id":937,"name":"苏州","weather_id":"CN101190401"},
+    {"id":938,"name":"常熟","weather_id":"CN101190402"},
+    ……
+    ]
+     */
     public static boolean handleCountyResponse(String response, int cityId) throws JSONException {
         if (!TextUtils.isEmpty(response)) {
             JSONArray allCounties = new JSONArray(response);

@@ -12,7 +12,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:text="未来6天"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textColor="@color/textColor"/>
 
     <LinearLayout
         android:id="@+id/forecast_layout"

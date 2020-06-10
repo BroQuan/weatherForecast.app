@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /*
 "daily_forecast":[
     {
-        "date":"2016-08-08",
+        "date":"2019-08-08",
         "cond":{
             "txt_d":"阵雨"
         },
@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
         }
     },
     {
-        "date":"2016-08-09",
+        "date":"2019-08-09",
         "cond":{
             "txt_d":"多云"
         },
@@ -27,7 +27,10 @@ import com.google.gson.annotations.SerializedName;
     },
     ...
 }
+daily_forecast中包含的是一个数组，数组中的每一项都代表着未来一天的天气信息。
+我的方法是定义出单日天气的实体类，然后在声明实体类引用的时候使用List类型来进行声明。
  */
+
 public class Forecast {
     public String date;
     @SerializedName("tmp")

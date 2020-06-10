@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,7 @@ public class ChooseAreaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        //从choose_area.xml资源中扩展新的视图层次结构
         View view = inflater.inflate(R.layout.choose_area, container, false);
         titleText = view.findViewById(R.id.title_text);
         backButton = view.findViewById(R.id.back_button);
@@ -82,11 +81,17 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String weatherId = countyList.get(i).getWeatherId();
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
-
+                    if (getActivity() instanceof MainActivity) {
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    } else if (getActivity() instanceof WeatherActivity) {
+                        WeatherActivity activity = (WeatherActivity) getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefreshLayout.setRefreshing(true);
+                        activity.requestWeather(weatherId);
+                    }
                 }
             }
         });
@@ -100,23 +105,24 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
-        queryProvinces();
+        queryProvinces();           //程序正式入口，加载省级数据
     }
     //查询所有省
     private void queryProvinces() {
         titleText.setText("中国");
         backButton.setVisibility(View.GONE);
         provinceList = DataSupport.findAll(Province.class);
-        if (provinceList.size() > 0) {
+        if (provinceList.size() > 0) {                      //数据库中有数据
             dataList.clear();
             for (Province province : provinceList) {
                 dataList.add(province.getProvinceName());
             }
+            //notifyDataSetChanged()可以在修改适配器绑定的数组后，不用重新刷新Activity，通知Activity更新ListView。
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
             currentLevel = LEVEL_PROVINCE;
         } else {
-            String address = "http://guolin.tech/api/china";
+            String address = "http://guolin.tech/api/china"; //数据库中没有数据
             queryFromServer(address, "province");
         }
     }
@@ -163,7 +169,7 @@ public class ChooseAreaFragment extends Fragment {
     //从服务器查询
     private void queryFromServer(String address, final String type) {
         showProgressDialog();
-        HttpUtil.sendOkHttpRequest(address, new Callback() {
+        HttpUtil.sendOkHttpRequest(address, new Callback() {    //调用HttpUtil中的向服务器发送请求方法
             @Override
             public void onFailure(Call call, IOException e) {
                 getActivity().runOnUiThread(new Runnable() {    //子线程到主线程切换
@@ -198,7 +204,7 @@ public class ChooseAreaFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }
-                if (result) {
+                if (result) {//重新加载省级数据，由于牵扯到UI操作，所以借助runOnUiThread()方法来实现从子线程切换到主线程。
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
