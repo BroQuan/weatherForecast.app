@@ -3,10 +3,11 @@ package com.example.weatherforecast.database;
 import org.litepal.crud.DataSupport;
 
 public class City extends DataSupport {
-    private int id;
-    private String cityName;
-    private int cityCode;
-    private int provinceId;
+    private int id;				//主键
+    private String cityName;	//城市名
+    private int cityCode;		//城市代号
+    private int provinceId; 	//所在省的id
+
 
     public int getId() {
         return id;

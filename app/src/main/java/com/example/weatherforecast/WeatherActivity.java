@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -69,7 +70,7 @@ public class WeatherActivity extends AppCompatActivity {
         sportText = findViewById(R.id.sport_text);
         backgroundImage = findViewById(R.id.back_image);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setColorSchemeResources(R.color.bule);
         drawerLayout = findViewById(R.id.drawer_layout);
         changeCounty = findViewById(R.id.change_county);
         changeCounty.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +84,7 @@ public class WeatherActivity extends AppCompatActivity {
         if (weatherString != null) {    // 有缓存，直接解析天气数据
             Weather weather = null;
             try {
+                Log.d("WeatherActivity", weatherString);
                 weather = Utility.handleWeatherResponse(weatherString);
                 mWeaterId = weather.basic.weatherId;
             } catch (JSONException e) {
@@ -149,6 +151,7 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void showWeatherInfo(Weather weather) {
         String cityName = weather.basic.cityName;
@@ -272,7 +275,7 @@ public class WeatherActivity extends AppCompatActivity {
         String sport = "运动建议：" + weather.suggestion.sport.info;
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
-        Intent intent = new Intent(this, AutoUpdateService.class);
+        Intent intent = new Intent(this, AutoUpdateService.class);  //后台自动更新天气服务
         startService(intent);
     }
 }

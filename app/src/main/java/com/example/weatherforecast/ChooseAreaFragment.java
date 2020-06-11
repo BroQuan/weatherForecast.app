@@ -92,6 +92,14 @@ public class ChooseAreaFragment extends Fragment {
                         activity.swipeRefreshLayout.setRefreshing(true);
                         activity.requestWeather(weatherId);
                     }
+                     /*
+                     instanceof 关键字可以用来判断一个对象是否属于某个类的实例。
+                     在碎片中调用getActivity() 方法，然后配合instanceof 关键字，
+                     就能判断出该碎片是在MainActivity当中，还是在WeatherActivity当中。
+                     如果是在MainActivity当中， 那么处理逻辑不变。
+                     如果是在WeatherActivity当中，
+                     那么就关闭滑动菜单，显示下拉刷新进度条，然后请求新城市的天气信息。
+                     */
                 }
             }
         });
@@ -105,7 +113,7 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
-        queryProvinces();           //程序正式入口，加载省级数据
+        queryProvinces();           //程序初始入口，加载省级数据
     }
     //查询所有省
     private void queryProvinces() {
