@@ -2,44 +2,42 @@ package com.example.weatherforecast.gson;
 
 import com.google.gson.annotations.SerializedName;
 
-//出行建议
-/*
-"suggestion":{
-    "comf":{
-        "txt":"白天天气较热，虽然有雨，但仍然无法削弱较高气温给人们带来的暑意，
-            这种天气会让您感到不很舒适。"
-    },
-    "cw":{
-        "txt":"不宜洗车，未来24小时内有雨，如果在此期间洗车，雨水和路上的泥水
-            可能会再次弄脏您的爱车。"
-    },
-    "sport":{
-        "txt":"有降水，且风力较强，推荐您在室内进行低强度运动；若坚持户外运动，
-            请选择避雨防风的地点。"
-    }
-}
+/*出行建议
+ "index": [
+                {
+                    "title": "中国人民保险<br>中暑指数",
+                    "level": "极易中暑",
+                    "desc": "酷热难当，要注意合理饮，运动前后尽量避免一次性大量饮水。"
+                },
+                {
+                    "title": "</em><em></em><em></em><em>",
+                    "level": null,
+                    "desc": "天气闷热，坚持室内低强度运动。"
+                },
+                {
+                    "title": "健臻·血糖指数",
+                    "level": "易波动",
+                    "desc": "血糖易波动，注意监测。"
+                },
+                {
+                    "title": "穿衣指数",
+                    "level": "热",
+                    "desc": "适合穿T恤、短薄外套等夏季服装。"
+                },
+                {
+                    "title": "洗车指数",
+                    "level": "不宜",
+                    "desc": "有雨，雨水和泥水会弄脏爱车。"
+                },
+                {
+                    "title": "紫外线指数",
+                    "level": "最弱",
+                    "desc": "辐射弱，涂擦SPF8-12防晒护肤品。"
+                }
+            ]
  */
-public class Suggestion {
-    @SerializedName("comf")
-    public Comfort comfort;
-
-    @SerializedName("cw")
-    public CarWash carWash;
-
-    public Sport sport;
-
-    public class Comfort {
-        @SerializedName("txt")
-        public String info;
-    }
-
-    public class CarWash {
-        @SerializedName("txt")
-        public String info;
-    }
-
-    public class Sport {
-        @SerializedName("txt")
-        public String info;
-    }
+public class Suggestion {//3-5有效
+    public String title;
+    public String level;
+    public String desc;
 }

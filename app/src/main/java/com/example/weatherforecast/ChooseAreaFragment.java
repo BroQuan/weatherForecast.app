@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +81,7 @@ public class ChooseAreaFragment extends Fragment {
                     selectCity = cityList.get(i);
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
-                    String weatherId = countyList.get(i).getWeatherId();
+                    String weatherId = countyList.get(i).getWeatherId().substring(2);
                     if (getActivity() instanceof MainActivity) {
                         Intent intent = new Intent(getActivity(), WeatherActivity.class);
                         intent.putExtra("weather_id", weatherId);

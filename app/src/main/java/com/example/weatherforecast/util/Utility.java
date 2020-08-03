@@ -1,6 +1,7 @@
 package com.example.weatherforecast.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.weatherforecast.database.City;
 import com.example.weatherforecast.database.County;
@@ -15,7 +16,6 @@ import org.json.JSONObject;
 public class Utility {
     //解析JSON数据：各个地区数据+天气数据
 
-
     //解析和处理服务器返回的省级数据
     /*
     [{"id":1,"name":"北京"},
@@ -23,7 +23,6 @@ public class Utility {
      ……
     ]
      */
-
     public static boolean handleProvinceResponse(String response) throws JSONException {
         if (!TextUtils.isEmpty(response)) {         //响应判空操作
             JSONArray allProvinces = new JSONArray(response);
@@ -83,21 +82,13 @@ public class Utility {
         }
         return false;
     }
+
     //将返回的JSON数据解析成Weather实体类
-    /*
-    {
-    "status": "ok",
-    "basic": {},
-    "aqi": {},
-    "now": {},
-    "suggestion": {},
-    "daily_forecast": []
-}
-     */
     public static Weather handleWeatherResponse(String response) throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
-        JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
-        String weatherContent = jsonArray.getJSONObject(0).toString();
+        String TAG = "WeatherActivity";
+        String weatherContent = jsonObject.toString();
+        Log.d(TAG,weatherContent);
         return new Gson().fromJson(weatherContent, Weather.class);
     }
 }
